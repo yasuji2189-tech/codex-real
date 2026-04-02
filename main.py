@@ -1,1 +1,1 @@
-print('codex ready')
+print('version 2')
