@@ -6,4 +6,9 @@ if [ -f .env ]; then
   source .env
   set +a
 fi
-python main.py "${1:-}"
+
+if [ $# -eq 0 ]; then
+  python main.py
+else
+  python main.py "$1"
+fi
