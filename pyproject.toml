@@ -5,5 +5,8 @@ description = "Practical greeting CLI"
 readme = "README.md"
 requires-python = ">=3.10"
 
+[project.scripts]
+codex-real = "src.cli:main"
+
 [tool.pytest.ini_options]
 testpaths = ["tests"]
