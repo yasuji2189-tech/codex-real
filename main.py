@@ -1,4 +1,5 @@
 import argparse
+import csv
 import json
 import os
 from pathlib import Path
@@ -9,6 +10,8 @@ parser = argparse.ArgumentParser(description="Simple greeting CLI")
 parser.add_argument("name", nargs="?", default=None, help="name to greet")
 parser.add_argument("--many", nargs="*", help="greet multiple names")
 parser.add_argument("--from-file", dest="from_file", help="read names from a text file")
+parser.add_argument("--from-csv", dest="from_csv", help="read names from a csv file")
+parser.add_argument("--csv-column", dest="csv_column", default="name", help="csv column name")
 parser.add_argument("--config", help="read settings from a json file")
 parser.add_argument("--json", action="store_true", help="output as json")
 parser.add_argument("--version", action="store_true", help="show app version")
@@ -30,7 +33,7 @@ if args.about:
     result = {
         "app": "codex-real",
         "version": APP_VERSION,
-        "supports": ["single", "many", "from-file", "config", "json", "env"],
+        "supports": ["single", "many", "from-file", "from-csv", "config", "json", "env"],
     }
 elif args.version:
     result = APP_VERSION
@@ -40,6 +43,15 @@ elif args.from_file:
         for line in Path(args.from_file).read_text(encoding="utf-8").splitlines()
         if line.strip() != ""
     ]
+    result = greet_many(names)
+elif args.from_csv:
+    names = []
+    with open(args.from_csv, encoding="utf-8", newline="") as f:
+        reader = csv.DictReader(f)
+        for row in reader:
+            value = (row.get(args.csv_column) or "").strip()
+            if value != "":
+                names.append(value)
     result = greet_many(names)
 elif args.many is not None:
     result = greet_many(args.many)
