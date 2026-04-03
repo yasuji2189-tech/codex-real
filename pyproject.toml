@@ -1,0 +1,9 @@
+[project]
+name = "codex-real"
+version = "0.1.1"
+description = "Practical greeting CLI"
+readme = "README.md"
+requires-python = ">=3.10"
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
