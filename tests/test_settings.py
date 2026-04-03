@@ -1,5 +1,6 @@
-from src.config.settings import DEFAULT_NAME
+from src.config.settings import get_default_name
 
 def test_default_name_exists():
-    assert isinstance(DEFAULT_NAME, str)
-    assert len(DEFAULT_NAME) >= 1
+    value = get_default_name()
+    assert isinstance(value, str)
+    assert len(value) >= 1

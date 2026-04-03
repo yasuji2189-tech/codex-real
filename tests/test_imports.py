@@ -1,6 +1,6 @@
 from src.app import greet
-from src.config.settings import DEFAULT_NAME
+from src.config.settings import get_default_name
 
 def test_imports():
-    assert DEFAULT_NAME == "world"
+    assert get_default_name() == "world"
     assert greet() == "hello, world"
