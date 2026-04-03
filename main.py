@@ -4,7 +4,7 @@ import json
 import os
 from pathlib import Path
 from src.app import greet, greet_many
-from src.transactions import load_transactions_csv, normalize_transactions
+from src.transactions import load_transactions_csv, normalize_transactions, to_journal_candidates
 from src.version import APP_VERSION
 
 parser = argparse.ArgumentParser(description="Simple greeting CLI")
@@ -17,6 +17,7 @@ parser.add_argument("--tx-csv", dest="tx_csv", help="read transaction csv")
 parser.add_argument("--tx-date-col", dest="tx_date_col", default="date", help="transaction date column")
 parser.add_argument("--tx-desc-col", dest="tx_desc_col", default="description", help="transaction description column")
 parser.add_argument("--tx-amount-col", dest="tx_amount_col", default="amount", help="transaction amount column")
+parser.add_argument("--tx-journal", action="store_true", help="convert transaction csv to journal candidates")
 parser.add_argument("--config", help="read settings from a json file")
 parser.add_argument("--json", action="store_true", help="output as json")
 parser.add_argument("--version", action="store_true", help="show app version")
@@ -38,7 +39,7 @@ if args.about:
     result = {
         "app": "codex-real",
         "version": APP_VERSION,
-        "supports": ["single", "many", "from-file", "from-csv", "tx-csv", "config", "json", "env"],
+        "supports": ["single", "many", "from-file", "from-csv", "tx-csv", "tx-journal", "config", "json", "env"],
     }
 elif args.version:
     result = APP_VERSION
@@ -49,7 +50,7 @@ elif args.tx_csv:
         desc_col=args.tx_desc_col,
         amount_col=args.tx_amount_col,
     )
-    result = normalize_transactions(rows)
+    result = to_journal_candidates(rows) if args.tx_journal else normalize_transactions(rows)
 elif args.from_file:
     names = [
         line.strip()
@@ -80,7 +81,9 @@ if json_output:
 else:
     if isinstance(result, list):
         for line in result:
-            if isinstance(line, dict):
+            if isinstance(line, dict) and "debit_account" in line:
+                print(f"{line['date']},{line['debit_account']},{line['debit_amount']},{line['credit_account']},{line['credit_amount']},{line['description']},{line['tax_category']}")
+            elif isinstance(line, dict):
                 print(f"{line['date']},{line['description']},{line['amount']}")
             else:
                 print(line)
