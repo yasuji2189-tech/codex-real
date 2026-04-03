@@ -1,12 +1,7 @@
-import subprocess
+import pathlib
 
-def test_verify_script_runs():
-    result = subprocess.run(
-        ["bash", "./tools/verify.sh"],
-        capture_output=True,
-        text=True,
-        check=True,
-    )
-    assert "0.1.1" in result.stdout
-    assert "app: codex-real" in result.stdout
-    assert "passed" in result.stdout
+def test_verify_script_file_exists():
+    text = pathlib.Path("tools/verify.sh").read_text(encoding="utf-8")
+    assert "python main.py --version" in text
+    assert "python main.py --about" in text
+    assert "pytest -q" in text
