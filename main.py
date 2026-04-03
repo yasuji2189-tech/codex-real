@@ -1,5 +1,8 @@
-import sys
+import argparse
 from src.app import greet
 
-name = sys.argv[1] if len(sys.argv) > 1 else None
-print(greet(name))
+parser = argparse.ArgumentParser(description="Simple greeting CLI")
+parser.add_argument("name", nargs="?", default=None, help="name to greet")
+args = parser.parse_args()
+
+print(greet(args.name))
