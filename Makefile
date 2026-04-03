@@ -1,15 +1,26 @@
-setup:
-	python3 -m venv .venv
-	. .venv/bin/activate && pip install -r requirements.txt
-
-run:
-	. .venv/bin/activate && python main.py
-
-run-sasaki:
-	. .venv/bin/activate && python main.py sasaki
+start:
+	./tools/start.sh
 
 test:
-	. .venv/bin/activate && pytest -q
+	pytest -q
 
-check:
-	. .venv/bin/activate && ./tools/check.sh
+preflight:
+	./tools/preflight.sh
+
+report:
+	./tools/report.sh
+
+final-check:
+	./tools/final-check.sh
+
+run:
+	python main.py
+
+run-many:
+	python main.py --many sasaki tanaka
+
+run-config:
+	python main.py --config config/sample.json
+
+run-csv:
+	python main.py --from-csv data/sample_names.csv
