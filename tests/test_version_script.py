@@ -7,4 +7,4 @@ def test_version_script():
         text=True,
         check=True,
     )
-    assert "0.1.0" in result.stdout
+    assert "0.1.1" in result.stdout
