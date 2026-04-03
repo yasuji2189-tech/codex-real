@@ -1,3 +1,4 @@
 import os
 
-DEFAULT_NAME = os.getenv("APP_DEFAULT_NAME", "world")
+def get_default_name():
+    return os.getenv("APP_DEFAULT_NAME", "world")
