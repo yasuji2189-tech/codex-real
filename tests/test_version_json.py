@@ -8,4 +8,4 @@ def test_version_json_output():
         text=True,
         check=True,
     )
-    assert json.loads(result.stdout) == "0.1.0"
+    assert json.loads(result.stdout) == "0.1.1"
