@@ -1,0 +1,6 @@
+{
+  "default_name": "tanaka",
+  "greeting_prefix": "goodbye",
+  "many_names": ["sasaki", "suzuki"],
+  "json_output": true
+}
