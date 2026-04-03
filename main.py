@@ -15,7 +15,9 @@ if args.version:
 elif args.many is not None:
     result = greet_many(args.many)
 else:
-    result = greet(args.name) if args.json:
+    result = greet(args.name)
+
+if args.json:
     print(json.dumps(result, ensure_ascii=False))
 else:
     if isinstance(result, list):
