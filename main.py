@@ -43,10 +43,12 @@ elif args.from_file:
     result = greet_many(names)
 elif args.many is not None:
     result = greet_many(args.many)
+elif args.name is not None:
+    result = greet(args.name)
 elif "many_names" in config:
     result = greet_many(config["many_names"])
 else:
-    result = greet(args.name)
+    result = greet(None)
 
 if json_output:
     print(json.dumps(result, ensure_ascii=False))
