@@ -1,1 +1,2 @@
-print('hello from src')
+def greet(name='world'):
+    return f'hello, {name}'
