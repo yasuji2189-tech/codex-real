@@ -1,4 +1,4 @@
 #!/usr/bin/env bash
 set -e
 source .venv/bin/activate
-python main.py "${1:-world}"
+python main.py "${1:-}"
